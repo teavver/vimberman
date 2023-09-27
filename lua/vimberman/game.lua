@@ -1,5 +1,6 @@
-local ui = require "vimberman.ui"
+local game_ui = require "vimberman.ui"
 local game_state = require "vimberman.state"
+local player = require "vimberman.player"
 local tree = require "vimberman.tree"
 
 local M = {
@@ -7,10 +8,14 @@ local M = {
     SCORE = 0,
 }
 
-function M.start_game()
+function M.new_game()
     tree.init()
-    ui.open_window()
-    ui.render_tree(tree.tree)
+    player.init()
+    game_ui.setup_buf()
+    game_ui.open_window()
+    game_ui.buf_set_lines_sprite(0, -1, false, true, tree.tree)
+    game_ui.buf_set_lines_sprite(tree.TREE_HEIGHT, -1, false, false, player.player)
+    game_ui.set_input(false)
 end
 
 function M.end_game()

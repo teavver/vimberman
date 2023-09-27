@@ -13,7 +13,7 @@ function M.main_menu()
   }, function(opt)
     if opt then
       if opt == menu_opts[1] then
-        game.start_game()
+        game.new_game()
       else end
     else end
   end)

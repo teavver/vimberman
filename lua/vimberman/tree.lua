@@ -1,25 +1,26 @@
-local M = {
-    tree = {}
+local tree_sprite = {
+    "         |     |         ",
+    "======+=<|     |         ",
+    "         |     |>===+====",
 }
 
-local tree_sprite = {
-    {"      |      |      "},
-    {"=====<|      |      "},
-    {"      |      |>====="},
+local M = {
+    tree = {},
+    TREE_HEIGHT = 6
 }
 
 function M.init()
     math.randomseed(os.time())
-    for i = 1, 7 do
+    for i = 1, M.TREE_HEIGHT+1 do
         local isBranch = M.rand_bool()
             if isBranch == true then
                 local isLeftBranch = M.rand_bool()
                 if isLeftBranch == true then
-                    M.tree[i] = tree_sprite[2][1]
+                    M.tree[i] = tree_sprite[2]
                 else
-                    M.tree[i] = tree_sprite[3][1]
+                    M.tree[i] = tree_sprite[3]
             end
-        else M.tree[i] = tree_sprite[1][1]
+        else M.tree[i] = tree_sprite[1]
         end
     end
 end
