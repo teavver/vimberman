@@ -1,12 +1,25 @@
 local tree_sprite = {
-    "         |     |         ",
-    "======+=<|     |         ",
-    "         |     |>===+====",
+    {
+        "          |    |          ",
+        "          |    |          ",
+        "          |    |          ",
+    },
+    {
+        "          |    |          ",
+        "==========|    |          ",
+        "          |    |          ",
+    },
+    {
+        "          |    |          ",
+        "          |    |==========",
+        "          |    |          ",
+    },
 }
 
 local M = {
     tree = {},
-    TREE_HEIGHT = 6
+    TREE_SPRITE_HEIGHT = 3,
+    TREE_HEIGHT = 6,
 }
 
 function M.init()

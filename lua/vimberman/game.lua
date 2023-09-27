@@ -13,8 +13,8 @@ function M.new_game()
     player.init()
     game_ui.setup_buf()
     game_ui.open_window()
-    game_ui.buf_set_lines_sprite(0, -1, false, true, tree.tree)
-    game_ui.buf_set_lines_sprite(tree.TREE_HEIGHT, -1, false, false, player.player)
+    game_ui.render_tree()
+    game_ui.buf_set_lines_sprite((tree.TREE_HEIGHT * tree.TREE_SPRITE_HEIGHT), -1, false, true, player.player)
     game_ui.set_input(false)
 end
 
