@@ -8,12 +8,12 @@ local M = {
 local player_sprite = {
     {
         " {|   o   |    |          ",
-        "  |={[#]} |    |          ",
+        "  |={###} |    |          ",
         "    _| |_ |    |          ",
     },
     {
         "      o   |    |          ",
-        "     [#]}--==- |          ",
+        "     ###}--==- |          ",
         "    _| |_ |    |          ",
     },
     {
@@ -23,12 +23,12 @@ local player_sprite = {
     },
     {
         "          |    |   o   |} ",
-        "          |    | {[#]}=|  ",
+        "          |    | {###}=|  ",
         "          |    | _| |_    ",
     },
     {
         "          |    |   o      ",
-        "          | -==--{[#]     ",
+        "          | -==--{###     ",
         "          |    | _| |_    ",
     },
     {
@@ -45,7 +45,7 @@ end
 function M.set_player_frame(idx)
     if player_sprite[idx] == nil or player_sprite[idx] == '' then
         utils.err("Failed to set player sprite (invalid index)")
-        return       
+        return
     end
 
     for i = 1, #player_sprite[idx] do
