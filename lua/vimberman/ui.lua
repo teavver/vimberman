@@ -4,7 +4,6 @@ local tree = require "vimberman.tree"
 local api = vim.api
 local win, buf
 
-
 local win_conf = {
   WIN_WIDTH = 32,
   WIN_HEIGHT = (tree.TREE_HEIGHT * tree.TREE_SPRITE_HEIGHT) + player.PLAYER_HEIGHT,
@@ -14,15 +13,19 @@ local M = {
   buf
 }
 
+function M.setup_buf()
+  M.buf = api.nvim_create_buf(false, true)
+  api.nvim_buf_set_option(M.buf, "bufhidden", "wipe")
+end
+
 function M.print_center(str)
   local width = api.nvim_win_get_width(0)
   local shift = math.floor(width / 2) - math.floor(string.len(str) / 2)
   return string.rep(' ', shift) .. str
 end
 
-function M.setup_buf()
-  M.buf = api.nvim_create_buf(false, true)
-  api.nvim_buf_set_option(M.buf, "bufhidden", "wipe")
+function M.clear_window()
+  api.nvim_buf_clear_namespace()
 end
 
 function M.open_window()
@@ -46,14 +49,19 @@ function M.open_window()
 end
 
 function M.render_player()
-    M.buf_set_lines_sprite((tree.TREE_HEIGHT * tree.TREE_SPRITE_HEIGHT), -1, false, true, player.player)
+    M.buf_set_lines_sprite(tree.TREE_HEIGHT * tree.TREE_SPRITE_HEIGHT, -1, false, true, player.player)
 end
 
 function M.render_tree()
-  for i=0, tree.TREE_HEIGHT do
+  for i=0, tree.TREE_HEIGHT-1 do
     M.buf_set_lines_sprite(i*tree.TREE_SPRITE_HEIGHT, i*tree.TREE_SPRITE_HEIGHT, false, true, tree.tree[i+1])
   end
 end
+
+-- function M.render_game_over(score)
+--   local game_info = {}
+--   api.nvim_buf_set_lines(M.buf, )
+-- end
 
 function M.buf_set_lines_sprite(pos_start, pos_end, strict_indexing, center, arr)
   local sprite = {}

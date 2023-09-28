@@ -1,9 +1,9 @@
-local menu = require "vimberman.menu"
+local game = require "vimberman.game"
 
 local M = {}
 
 function M.main()
-    menu.main_menu()
+    game.new_game()
 end
 
 return M
