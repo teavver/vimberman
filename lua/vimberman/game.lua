@@ -14,6 +14,8 @@ local keybinds = {
     chop_right = {"l", "<Right>"},
 }
 
+local chop_dir = nil
+
 function M.new_game()
     utils.rand_init()
     tree.init()
@@ -34,23 +36,24 @@ function M.update_game()
         game_ui.render_tree()
         game_ui.render_player()
         game_ui.set_input(false)
-        print("Score: ", M.SCORE)
+        -- print("Score: ", M.SCORE)
     else
-        print("GAME OVER. Score: ", M.SCORE)
+        -- print("GAME OVER. Score: ", M.SCORE)
         -- game_ui.close_window()
     end
 end
 
 function M.setup_keybinds()
-    utils.nnoremap(game_ui.buf, keybinds.chop_left, function() M.chop(tree.tree_branches.LEFT) end, "Chop chop chop")
-    utils.nnoremap(game_ui.buf, keybinds.chop_right, function() M.chop(tree.tree_branches.RIGHT) end, "Chop chop chop")
+    utils.nnoremap(game_ui.buf, keybinds.chop_left, function() chop_dir = tree.tree_branches.LEFT M.chop() end, "Chop chop chop")
+    utils.nnoremap(game_ui.buf, keybinds.chop_right, function() chop_dir = tree.tree_branches.RIGHT M.chop() end, "Chop chop chop")
 end
 
-function M.chop(dir)
-    local valid_chop = tree.eval_tree_chop(dir)
-    if valid_chop then
+function M.chop()
+    local valid = tree.is_chop_valid(chop_dir)
+    print(valid)
+    if valid then
         M.SCORE = M.SCORE + 1
-    else
+    else    
         M.STATE = state.GAME_OVER
     end
     tree.move_tree()

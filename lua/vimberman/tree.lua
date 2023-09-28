@@ -57,21 +57,25 @@ function M.get_chunk(idx)
     return M.tree[idx]
 end
 
--- function M.is_chunk_branched(idx, side)
---     local chunk = M.get_chunk(idx)
---     if chunk == tree_sprite[M.tree_branches.NONE] then
---         return false
---     end
---     if side == M.tree_branches.LEFT then
---         return chunk == tree_sprite[M.tree_branches.LEFT]
---     else
---         return chunk == tree_sprite[M.tree_branches.RIGHT]
---     end
--- end
+function M.is_branch(chunk_idx, side)
+    local chunk = M.get_chunk(chunk_idx)
+    if chunk == tree_sprite[M.tree_branches.NONE] then
+        return false
+    end
+    if side == M.tree_branches.LEFT then
+        return chunk == tree_sprite[M.tree_branches.LEFT]
+    else
+        return chunk == tree_sprite[M.tree_branches.RIGHT]
+    end
+end
 
-function M.eval_tree_chop(dir --[[tree_branches]])
-    if M.get_chunk(#M.tree) == tree_sprite[dir] then return false
-    else return true
+function M.is_chop_valid(dir --[[tree_branches]])
+    if M.get_chunk(#M.tree) == tree_sprite[dir]
+    or M.get_chunk(#M.tree) == tree_sprite[dir]
+    then
+        return false
+    else
+        return true
     end
 end
 
