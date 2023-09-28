@@ -33,6 +33,7 @@ local tree_sprite = {
 function M.init()
     for i = 1, M.TREE_HEIGHT do
         M.set_chunk_random(i)
+        -- M.set_chunk(i+1, M.tree_branches.NONE)
     end
     M.tree[#M.tree] = tree_sprite[M.tree_branches.NONE]
 end
@@ -57,6 +58,10 @@ function M.get_chunk(idx)
     return M.tree[idx]
 end
 
+function M.set_chunk(idx, type)
+    M.tree[idx] = tree_sprite[type]
+end
+
 function M.is_branch(chunk_idx, side)
     local chunk = M.get_chunk(chunk_idx)
     if chunk == tree_sprite[M.tree_branches.NONE] then
@@ -71,7 +76,7 @@ end
 
 function M.is_chop_valid(dir --[[tree_branches]])
     if M.get_chunk(#M.tree) == tree_sprite[dir]
-    or M.get_chunk(#M.tree) == tree_sprite[dir]
+    -- or M.get_chunk(#M.tree-1) == tree_sprite[dir]
     then
         return false
     else

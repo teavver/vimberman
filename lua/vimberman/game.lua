@@ -49,15 +49,16 @@ function M.setup_keybinds()
 end
 
 function M.chop()
-    local valid = tree.is_chop_valid(chop_dir)
-    print(valid)
-    if valid then
-        M.SCORE = M.SCORE + 1
-    else    
-        M.STATE = state.GAME_OVER
-    end
+    -- print(valid)
     tree.move_tree()
     M.update_game()
+    local valid = tree.is_chop_valid(chop_dir)
+    print("LOwest", tree.tree[#tree.tree][2], "Ok-1", tree.tree[#tree.tree-1][2])
+    -- if valid then
+    --     M.SCORE = M.SCORE + 1
+    -- else
+    --     M.STATE = state.GAME_OVER
+    -- end
 end
 
 return M
