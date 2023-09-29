@@ -32,22 +32,20 @@ local tree_sprite = {
 
 function M.init()
     for i = 1, M.TREE_HEIGHT do
-        M.set_chunk_random(i)
-        -- M.set_chunk(i+1, M.tree_branches.NONE)
+        if i % 2 == 0 then
+            M.set_chunk(i, M.tree_branches.NONE)
+        else
+            M.set_chunk_rand_branch(i)
+        end
     end
-    M.tree[#M.tree] = tree_sprite[M.tree_branches.NONE]
 end
 
-function M.set_chunk_random(idx)
-    local isBranch = utils.rand_bool()
-        if isBranch == true then
-            local isLeftBranch = utils.rand_bool()
-            if isLeftBranch == true then
-                M.tree[idx] = tree_sprite[M.tree_branches.LEFT]
-            else
-                M.tree[idx] = tree_sprite[M.tree_branches.RIGHT]
-        end
-        else M.tree[idx] = tree_sprite[M.tree_branches.NONE]
+function M.set_chunk_rand_branch(idx)
+    local isLeftBranch = utils.rand_bool()
+    if isLeftBranch == true then
+        M.tree[idx] = tree_sprite[M.tree_branches.LEFT]
+        else
+        M.tree[idx] = tree_sprite[M.tree_branches.RIGHT]
     end
 end
 
@@ -85,9 +83,19 @@ function M.is_chop_valid(dir --[[tree_branches]])
 end
 
 function M.move_tree()
+    local top = M.get_chunk(1)
     table.remove( M.tree, #M.tree)
     table.insert(M.tree, 1, nil)
-    M.set_chunk_random(1)
+    if top == tree_sprite[M.tree_branches.LEFT] then
+        -- print("Left")
+        M.set_chunk(1, M.tree_branches.NONE)
+    elseif top == tree_sprite[M.tree_branches.RIGHT] then
+        -- print("ruight")
+        M.set_chunk(1, M.tree_branches.NONE)
+    else
+        -- print("None")
+        M.set_chunk_rand_branch(1)
+    end
 end
 
 return M

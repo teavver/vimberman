@@ -36,11 +36,9 @@ function M.rand_init()
 end
 
 function M.rand_bool()
-    local rnd = math.random()
-    if rnd > 0.5 then
-        return true
-    end
-    return false
+  if math.random() >= 0.5 then return true
+  else return false
+  end
 end
 
 return M

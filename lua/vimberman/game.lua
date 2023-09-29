@@ -49,11 +49,10 @@ function M.setup_keybinds()
 end
 
 function M.chop()
-    -- print(valid)
+    local valid = tree.is_chop_valid(chop_dir)
+    -- print("LOWEST ", tree.tree[#tree.tree][2], "ABOVE ", tree.tree[#tree.tree-1][2], "VALID___ ", valid)
     tree.move_tree()
     M.update_game()
-    local valid = tree.is_chop_valid(chop_dir)
-    print("LOwest", tree.tree[#tree.tree][2], "Ok-1", tree.tree[#tree.tree-1][2])
     -- if valid then
     --     M.SCORE = M.SCORE + 1
     -- else

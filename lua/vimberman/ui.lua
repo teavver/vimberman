@@ -53,8 +53,8 @@ function M.render_player()
 end
 
 function M.render_tree()
-  for i=1, tree.TREE_HEIGHT do
-    M.buf_set_lines_sprite(i*tree.TREE_SPRITE_HEIGHT, i*tree.TREE_SPRITE_HEIGHT, false, true, tree.tree[i])
+  for i=0, tree.TREE_HEIGHT-1 do
+    M.buf_set_lines_sprite(i*tree.TREE_SPRITE_HEIGHT, i*tree.TREE_SPRITE_HEIGHT, false, true, tree.tree[i+1])
   end
 end
 
