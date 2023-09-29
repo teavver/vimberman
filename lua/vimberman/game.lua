@@ -10,8 +10,8 @@ local M = {
 }
 
 local keybinds = {
-    chop_left = {"h", "<Left>"},
-    chop_right = {"l", "<Right>"},
+    chop_left = {"a", "h", "<Left>"},
+    chop_right = {"f", "l", "<Right>"},
 }
 
 local chop_dir
