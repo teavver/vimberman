@@ -83,13 +83,10 @@ function M.move_tree()
     table.remove( M.tree, #M.tree)
     table.insert(M.tree, 1, nil)
     if top == tree_sprite[M.tree_branches.LEFT] then
-        -- print("Left")
         M.set_chunk(1, M.tree_branches.NONE)
     elseif top == tree_sprite[M.tree_branches.RIGHT] then
-        -- print("ruight")
         M.set_chunk(1, M.tree_branches.NONE)
     else
-        -- print("None")
         M.set_chunk_rand_branch(1)
     end
 end

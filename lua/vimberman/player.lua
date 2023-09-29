@@ -95,4 +95,37 @@ function M.set_player_state(idx)
     end
 end
 
+-- lord forgive me for this ugly ass function
+function M.move_player(dir, valid_root, valid_above)
+    if not valid_root then
+        if dir == tree.tree_branches.LEFT then
+            M.set_player_state(M.player_states.GAME_OVER_LEFT) return
+        else
+            M.set_player_state(M.player_states.GAME_OVER_RIGHT) return
+        end
+    end
+
+    if not valid_above then
+        if dir == tree.tree_branches.LEFT then
+            M.set_player_state(M.player_states.GAME_OVER_LEFT)
+        else
+            M.set_player_state(M.player_states.GAME_OVER_RIGHT)
+        end
+    else
+        if dir == tree.tree_branches.LEFT then
+            if tree.is_branch(#tree.tree-1, tree.tree_branches.RIGHT) then
+                M.set_player_state(M.player_states.CHOPPING_LEFT_BRANCH) return
+            else
+                M.set_player_state(M.player_states.CHOPPING_LEFT)
+            end
+        else
+            if tree.is_branch(#tree.tree-1, tree.tree_branches.LEFT) then
+                M.set_player_state(M.player_states.CHOPPING_RIGHT_BRANCH) return
+            else
+                M.set_player_state(M.player_states.CHOPPING_RIGHT)
+            end
+        end
+    end
+end
+
 return M

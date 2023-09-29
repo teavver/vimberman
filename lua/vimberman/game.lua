@@ -36,11 +36,10 @@ function M.update_game()
         game_ui.render_tree()
         game_ui.render_player()
         game_ui.set_input(false)
-        print("Root: ", tree.tree[#tree.tree][2], "Above -1: ", tree.tree[#tree.tree-1][2])
-        -- print("Score: ", M.SCORE)
+        print("Score: ", M.SCORE)
     else
-        -- print("GAME OVER. Score: ", M.SCORE)
-        -- game_ui.close_window()
+        print("GAME OVER. Score: ", M.SCORE)
+        game_ui.close_window()
     end
 end
 
@@ -50,18 +49,17 @@ function M.setup_keybinds()
 end
 
 function M.chop()
-    -- local valid_p_level = tree.is_chop_valid(#tree.tree, chop_dir)
-    -- local valid_p_above = tree.is_chop_valid(#tree.tree-1, chop_dir)
-    -- print("P level: ", valid_p_level, "Above: ", valid_p_above)
-    -- print("P level: ", tree.tree[#tree.tree][2], "Above: ", tree.tree[#tree.tree-1][2])
-    tree.move_tree()
+    local valid_root = tree.is_chop_valid(#tree.tree, chop_dir)
+    local valid_above = tree.is_chop_valid(#tree.tree-1, chop_dir)
+    player.move_player(chop_dir, valid_root, valid_above)
+    if valid_root then
+        tree.move_tree()
+    end
+    if not valid_root or not valid_above then
+        M.end_game()
+    end
+    M.SCORE = M.SCORE + 1
     M.update_game()
-    -- print("LOWEST ", tree.tree[#tree.tree][2], "ABOVE ", tree.tree[#tree.tree-1][2], "VALID___ ", valid)
-    -- if valid then
-    --     M.SCORE = M.SCORE + 1
-    -- else
-    --     M.STATE = state.GAME_OVER
-    -- end
 end
 
 return M
