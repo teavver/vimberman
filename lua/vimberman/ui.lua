@@ -4,9 +4,10 @@ local tree = require "vimberman.tree"
 local api = vim.api
 local win, buf
 
+local TITLE_HEIGHT = 3
 local win_conf = {
   WIN_WIDTH = 32,
-  WIN_HEIGHT = ((tree.TREE_HEIGHT-1) * tree.TREE_SPRITE_HEIGHT) + player.PLAYER_HEIGHT,
+  WIN_HEIGHT = TITLE_HEIGHT + ((tree.TREE_HEIGHT-1) * tree.TREE_SPRITE_HEIGHT) + player.PLAYER_HEIGHT,
 }
 
 local M = {
@@ -24,18 +25,14 @@ function M.print_center(str)
   return string.rep(' ', shift) .. str
 end
 
-function M.clear_window()
-  api.nvim_buf_clear_namespace()
-end
-
 function M.open_window()
-  
+
   local width = api.nvim_get_option("columns")
   local height = api.nvim_get_option("lines")
-  
+
   local row = math.ceil((height - win_conf.WIN_HEIGHT) / 2 - 1)
   local col = math.ceil((width - win_conf.WIN_WIDTH) / 2)
-  
+
   local window_opts = {
     style = "minimal",
     relative = "editor",
@@ -44,24 +41,28 @@ function M.open_window()
     row = row,
     col = col,
   }
-  
+
   win = api.nvim_open_win(M.buf, true, window_opts)
 end
 
 function M.render_player()
-    M.buf_set_lines_sprite((tree.TREE_HEIGHT-1) * tree.TREE_SPRITE_HEIGHT, -1, false, true, player.player)
+    M.buf_set_lines_sprite(TITLE_HEIGHT + (tree.TREE_HEIGHT-1) * tree.TREE_SPRITE_HEIGHT, -1, false, true, player.player)
 end
 
 function M.render_tree()
   for i=0, tree.TREE_HEIGHT-2 do
-    M.buf_set_lines_sprite(i*tree.TREE_SPRITE_HEIGHT, i*tree.TREE_SPRITE_HEIGHT, false, true, tree.tree[i+1])
+    M.buf_set_lines_sprite(TITLE_HEIGHT + (i*tree.TREE_SPRITE_HEIGHT), TITLE_HEIGHT + (i*tree.TREE_SPRITE_HEIGHT), false, true, tree.tree[i+1])
   end
 end
 
--- function M.render_game_over(score)
---   local game_info = {}
---   api.nvim_buf_set_lines(M.buf, )
--- end
+function M.set_title_content(str)
+  local title_content = {
+    "=============================",
+    str,
+    "=============================",
+  }
+  M.buf_set_lines_sprite(0, TITLE_HEIGHT, false, true, title_content)
+end
 
 function M.buf_set_lines_sprite(pos_start, pos_end, strict_indexing, center, arr)
   local sprite = {}

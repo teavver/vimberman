@@ -22,25 +22,19 @@ function M.new_game()
     player.init()
     game_ui.setup_buf()
     game_ui.open_window()
+    game_ui.set_title_content("Vimberman")
     M.setup_keybinds()
     M.update_game()
 end
 
-function M.end_game()
-    M.STATE = state.GAME_OVER
-end
-
 function M.update_game()
-    if M.STATE == state.GAME_RUNNING then
-        game_ui.set_input(true)
-        game_ui.render_tree()
-        game_ui.render_player()
-        game_ui.set_input(false)
-        print("Score: ", M.SCORE)
-    else
-        print("GAME OVER. Score: ", M.SCORE)
-        game_ui.close_window()
+    game_ui.set_input(true)
+    game_ui.render_tree()
+    game_ui.render_player()
+    if M.STATE == state.GAME_OVER then
+        game_ui.set_title_content("GAME OVER! Your score: " .. M.SCORE)
     end
+    game_ui.set_input(false)
 end
 
 function M.setup_keybinds()
@@ -49,6 +43,10 @@ function M.setup_keybinds()
 end
 
 function M.chop()
+    if M.STATE == state.GAME_OVER then
+        return
+    end
+
     local valid_root = tree.is_chop_valid(#tree.tree, chop_dir)
     local valid_above = tree.is_chop_valid(#tree.tree-1, chop_dir)
     player.move_player(chop_dir, valid_root, valid_above)
@@ -56,9 +54,10 @@ function M.chop()
         tree.move_tree()
     end
     if not valid_root or not valid_above then
-        M.end_game()
+        M.STATE = state.GAME_OVER
+    else
+        M.SCORE = M.SCORE + 1
     end
-    M.SCORE = M.SCORE + 1
     M.update_game()
 end
 
