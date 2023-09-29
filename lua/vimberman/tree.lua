@@ -72,13 +72,9 @@ function M.is_branch(chunk_idx, side)
     end
 end
 
-function M.is_chop_valid(dir --[[tree_branches]])
-    if M.get_chunk(#M.tree) == tree_sprite[dir]
-    -- or M.get_chunk(#M.tree-1) == tree_sprite[dir]
-    then
-        return false
-    else
-        return true
+function M.is_chop_valid(idx, chop_dir)
+    if M.get_chunk(idx) == tree_sprite[chop_dir] then return false
+    else return true
     end
 end
 

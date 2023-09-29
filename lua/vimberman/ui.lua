@@ -6,7 +6,7 @@ local win, buf
 
 local win_conf = {
   WIN_WIDTH = 32,
-  WIN_HEIGHT = (tree.TREE_HEIGHT * tree.TREE_SPRITE_HEIGHT) + player.PLAYER_HEIGHT,
+  WIN_HEIGHT = ((tree.TREE_HEIGHT-1) * tree.TREE_SPRITE_HEIGHT) + player.PLAYER_HEIGHT,
 }
 
 local M = {
@@ -49,11 +49,11 @@ function M.open_window()
 end
 
 function M.render_player()
-    M.buf_set_lines_sprite(tree.TREE_HEIGHT * tree.TREE_SPRITE_HEIGHT, -1, false, true, player.player)
+    M.buf_set_lines_sprite((tree.TREE_HEIGHT-1) * tree.TREE_SPRITE_HEIGHT, -1, false, true, player.player)
 end
 
 function M.render_tree()
-  for i=0, tree.TREE_HEIGHT-1 do
+  for i=0, tree.TREE_HEIGHT-2 do
     M.buf_set_lines_sprite(i*tree.TREE_SPRITE_HEIGHT, i*tree.TREE_SPRITE_HEIGHT, false, true, tree.tree[i+1])
   end
 end

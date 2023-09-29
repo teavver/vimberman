@@ -14,7 +14,7 @@ local keybinds = {
     chop_right = {"l", "<Right>"},
 }
 
-local chop_dir = nil
+local chop_dir
 
 function M.new_game()
     utils.rand_init()
@@ -36,6 +36,7 @@ function M.update_game()
         game_ui.render_tree()
         game_ui.render_player()
         game_ui.set_input(false)
+        print("Root: ", tree.tree[#tree.tree][2], "Above -1: ", tree.tree[#tree.tree-1][2])
         -- print("Score: ", M.SCORE)
     else
         -- print("GAME OVER. Score: ", M.SCORE)
@@ -49,10 +50,13 @@ function M.setup_keybinds()
 end
 
 function M.chop()
-    local valid = tree.is_chop_valid(chop_dir)
-    -- print("LOWEST ", tree.tree[#tree.tree][2], "ABOVE ", tree.tree[#tree.tree-1][2], "VALID___ ", valid)
+    -- local valid_p_level = tree.is_chop_valid(#tree.tree, chop_dir)
+    -- local valid_p_above = tree.is_chop_valid(#tree.tree-1, chop_dir)
+    -- print("P level: ", valid_p_level, "Above: ", valid_p_above)
+    -- print("P level: ", tree.tree[#tree.tree][2], "Above: ", tree.tree[#tree.tree-1][2])
     tree.move_tree()
     M.update_game()
+    -- print("LOWEST ", tree.tree[#tree.tree][2], "ABOVE ", tree.tree[#tree.tree-1][2], "VALID___ ", valid)
     -- if valid then
     --     M.SCORE = M.SCORE + 1
     -- else
