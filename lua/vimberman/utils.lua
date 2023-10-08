@@ -15,30 +15,30 @@ function M.err(msg)
 end
 
 function M.nnoremap(buf, lhs, rhs, desc)
-  if type(lhs) == "string" then
-    lhs = { lhs }
-  end
+    if type(lhs) == "string" then
+        lhs = { lhs }
+    end
 
-  for _, value in ipairs(lhs) do
-    local callback = type(rhs) == "function" and rhs or nil
-    api.nvim_buf_set_keymap(
-      buf,
-      "n",
-      value,
-      callback and "" or rhs,
-      { noremap = true, silent = true, callback = callback, desc = desc }
-    )
-  end
+    for _, value in ipairs(lhs) do
+        local callback = type(rhs) == "function" and rhs or nil
+        api.nvim_buf_set_keymap(
+            buf,
+            "n",
+            value,
+            callback and "" or rhs,
+            { noremap = true, silent = true, callback = callback, desc = desc }
+        )
+    end
 end
 
 function M.rand_init()
-  math.randomseed(os.time())
+    math.randomseed(os.time())
 end
 
 function M.rand_bool()
-  if math.random() >= 0.5 then return true
-  else return false
-  end
+    if math.random() >= 0.5 then return true
+    else return false
+    end
 end
 
 return M
