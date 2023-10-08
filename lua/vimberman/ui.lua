@@ -1,6 +1,5 @@
 local player = require "vimberman.player"
 local tree = require "vimberman.tree"
-local colors = require "vimberman.colors"
 
 local api = vim.api
 local win, buf
